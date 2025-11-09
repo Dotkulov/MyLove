@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подарок для самой прекрасной 💝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #a1c4fd);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            animation: fadeInDown 1.5s ease;
+        }
+
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            color: #fff;
+            font-size: 1.3em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .gift-section {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .gift-emoji {
+            font-size: 150px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            animation: pulse 2s infinite alternate;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+        }
+
+        .gift-emoji:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .open-btn {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            font-weight: bold;
+            letter-spacing: 1px;
+            z-index: 20;
+            position: relative;
+        }
+
+        .open-btn:hover {
+            background: linear-gradient(to right, #c0392b, #a93226);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        }
+
+        .text-overlay {
+            display: none;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .text-overlay h2 {
+            color: #e74c3c;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+
+        .text-overlay p {
+            color: #333;
+            font-size: 1.3em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .signature {
+            margin-top: 25px;
+            font-style: italic;
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 1.4em;
+            text-align: right;
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 8s ease-in infinite;
+            opacity: 0;
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(255,255,255,0.9);
+        }
+
+        .music-icon {
+            font-size: 24px;
+            color: #e74c3c;
+        }
+
+        .photo-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Любимая.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            }
+            100% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 15px 30px rgba(231, 76, 60, 0.4));
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background-color: #f0f;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        .flowers {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        .gift-opened {
+            font-size: 120px;
+            margin: 20px 0;
+            animation: bounce 1s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0) scale(1);
+            }
+            to {
+                transform: translateY(-20px) scale(1.1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .gift-emoji {
+                font-size: 120px;
+            }
+
+            .text-overlay {
+                padding: 25px;
+            }
+
+            .text-overlay h2 {
+                font-size: 1.8em;
+            }
+
+            .text-overlay p {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="photo-background"></div>
+    <div class="hearts" id="hearts"></div>
+    <div class="flowers" id="flowers"></div>
+    <div class="confetti-container" id="confetti"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Для самой прекрасной в мире 💕</h1>
+            <div class="subtitle">Нажми на подарок, чтобы открыть</div>
+        </div>
+
+        <div class="gift-section">
+            <div class="gift-emoji" onclick="openGift()">🎁</div>
+        </div>
+
+        <button class="open-btn" onclick="openGift()">Открыть подарок 💝</button>
+
+        <div class="text-overlay" id="textOverlay">
+            <h2>Моя любимая! 💖</h2>
+            <p>Ты - самое прекрасное, что случилось в моей жизни. Каждый день с тобой - это подарок, который я ценю больше всего на свете.</p>
+            <p>Твоя улыбка и твои глаза - это целая вселенная, в которой я хочу потеряться навсегда. Ты делаешь меня понястоящему счастливым.</p>
+            <p>Спасибо тебе за твою доброту, заботу и любовь. Ты - моё счастье, моя любовь, моя мечта... 💫</p>
+            <p>Я бесконечно благодарен судьбе за то, что ты появилась в моей жизни!</p>
+            <div class="signature">Люблю тебя больше всех на свете! 💝</div>
+        </div>
+    </div>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <div class="music-icon" id="musicIcon">🎵</div>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="Воспоминание о былой любви.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const giftEmoji = document.querySelector('.gift-emoji');
+        const textOverlay = document.getElementById('textOverlay');
+        const openBtn = document.querySelector('.open-btn');
+        const music = document.getElementById('backgroundMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        const heartsContainer = document.getElementById('hearts');
+        const flowersContainer = document.getElementById('flowers');
+        const confettiContainer = document.getElementById('confetti');
+
+        const hearts = ['💖', '💕', '💗', '💓', '💝', '💘', '❤️', '🧡', '💛', '💚', '💙', '💜'];
+        const flowers = ['🌸', '🌹', '🌺', '🌻', '🌼', '💐', '🥀', '🌷'];
+        let musicPlaying = false;
+        let giftOpened = false;
+
+        function createHearts() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    heart.style.fontSize = (Math.random() * 25 + 20) + 'px';
+                    heartsContainer.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 9000);
+                }, i * 300);
+            }
+        }
+
+        function createFlowers() {
+            for (let i = 0; i < 8; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flowers';
+                flower.innerHTML = flowers[i];
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.top = Math.random() * 100 + 'vh';
+                flower.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                flower.style.opacity = Math.random() * 0.5 + 0.3;
+                flowersContainer.appendChild(flower);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#e74c3c', '#2ecc71', '#3498db', '#f1c40f', '#9b59b6', '#1abc9c'];
+
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.opacity = '1';
+                confettiContainer.appendChild(confetti);
+
+                const animation = confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 720 - 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+                });
+
+                animation.onfinish = () => {
+                    confetti.remove();
+                };
+            }
+        }
+
+        function openGift() {
+            if (giftOpened) return;
+
+            giftOpened = true;
+
+            giftEmoji.style.transform = 'scale(0) rotate(180deg)';
+            giftEmoji.style.opacity = '0';
+
+            openBtn.style.display = 'none';
+
+            createConfetti();
+
+            setTimeout(() => {
+                textOverlay.style.display = 'block';
+                createHearts();
+
+                if (!musicPlaying) {
+                    toggleMusic();
+                }
+            }, 800);
+
+            setInterval(createHearts, 3000);
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                musicIcon.textContent = '🎵';
+            } else {
+                music.play().catch(e => {
+                    console.log("Автовоспроизведение заблокировано. Нажмите на кнопку музыки.");
+                });
+                musicIcon.textContent = '🔊';
+            }
+            musicPlaying = !musicPlaying;
+        }
+
+        window.onload = function() {
+            createFlowers();
+            createHearts();
+
+            setTimeout(() => {
+                if (!musicPlaying) {
+                    alert("Разрешите автовоспроизведение музыки или нажмите на кнопку музыки в правом нижнем углу.");
+                }
+            }, 3000);
+        };
+    </script>
+</body>
+</html>
